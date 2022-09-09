@@ -1,5 +1,5 @@
 namespace Assignment01.Tests;
 
-public class IteratorTestss
+public class IteratorTests
 {
 }
