@@ -40,5 +40,22 @@ public static class RegExpr
 
     
 
-    public static IEnumerable<(Uri url, string title)> Urls(string html) => throw new NotImplementedException();
+    public static IEnumerable<(Uri url, string title)> Urls(string html)
+    {
+        var pattern = @"href=""(?<url>.*?)"".*?(?:(?:title=""(?<title>.*?)"")|(?:>(?<innerText>.*?)<\/a>))";
+
+        foreach(Match match in Regex.Matches(html, pattern))
+        {
+            if(match.Groups["title"].Value != "")
+            {
+                yield return (new Uri(match.Groups["url"].Value), match.Groups["title"].Value);
+            }
+            else
+            {
+                yield return (new Uri(match.Groups["url"].Value), match.Groups["innerText"].Value);
+            }
+            
+        }
+    }
+
 }
