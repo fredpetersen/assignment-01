@@ -28,7 +28,17 @@ public static class RegExpr
         }
     }
 
-    public static IEnumerable<string> InnerText(string html, string tag) => throw new NotImplementedException();
+    public static IEnumerable<string> InnerText(string html, string tag)
+    {
+        var pattern = @"<(" + tag + @").*?>(?<innerText>.*?)<\/\1>";
+
+        foreach (Match match in Regex.Matches(html, pattern))
+	    {
+            yield return Regex.Replace(match.Groups["innerText"].Value, @"(<[^][^>]*>)", "");
+	    }
+    }
+
+    
 
     public static IEnumerable<(Uri url, string title)> Urls(string html) => throw new NotImplementedException();
 }
