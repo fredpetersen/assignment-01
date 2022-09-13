@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace Assignment01;
 
 public static class RegExpr
@@ -12,15 +14,17 @@ public static class RegExpr
         }
     }
 
-    public static IEnumerable<(int width, int height)> Resolutions(IEnumerable<string> resolutions) => throw new NotImplementedException();
+    public static IEnumerable<(int width, int height)> Resolutions(IEnumerable<string> resolutions)
     {
 
         var pattern = @"(?<width>\d+)x(?<height>\d+)";
 
-
-        foreach(var resolution in resolutions.Split(", "))
+        foreach(var resolution in resolutions)
         {
-            yield return resolution
+            foreach(Match match in Regex.Matches(resolution, pattern))
+            {
+                yield return (int.Parse(match.Groups["width"].Value), int.Parse(match.Groups["height"].Value));
+            }
         }
     }
 
