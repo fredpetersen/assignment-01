@@ -29,4 +29,6 @@ public static class RegExpr
     }
 
     public static IEnumerable<string> InnerText(string html, string tag) => throw new NotImplementedException();
+
+    public static IEnumerable<(Uri url, string title)> Urls(string html) => throw new NotImplementedException();
 }
